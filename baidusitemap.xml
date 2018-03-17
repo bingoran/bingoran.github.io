@@ -277,56 +277,6 @@
     
     
   <url>
-    <loc>https://bingoran.github.io/2015/05/21/2015-05-21-MyBatiesDemo1/</loc>
-    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
-    <data>
-        <display>
-        <title>搭建简单的MyBaties框架</title>
-        <pubTime>2015-05-21T08:05:12.000Z</pubTime>
-        
-        <tag>MyBaties</tag>
-         
-         
-           
-             
-              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://bingoran.github.io/2015/01/07/2015-01-07-springmec-ehcache/</loc>
-    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
-    <data>
-        <display>
-        <title>Spring MVC3整合缓存Ehcache实现</title>
-        <pubTime>2015-01-07T13:12:29.000Z</pubTime>
-        
-        <tag>软件配置</tag>
-         
-        <tag>springMVC</tag>
-         
-        <tag>ehcache</tag>
-         
-        <tag>缓存</tag>
-         
-        <tag>xhay</tag>
-         
-        <tag>web前端</tag>
-         
-         
-           
-             
-              <breadCrumb title="java" url="https://bingoran.github.io/categories/java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://bingoran.github.io/2015/04/09/2015-04-09-Spring3test/</loc>
     <lastmod>2015-07-21T16:23:28.000Z</lastmod>
     <data>
@@ -336,11 +286,11 @@
         
         <tag>spring</tag>
          
-        <tag>springIOC</tag>
-         
         <tag>框架</tag>
          
         <tag>spring配置</tag>
+         
+        <tag>springIOC</tag>
          
          
            
@@ -362,11 +312,57 @@
         
         <tag>spring</tag>
          
+        <tag>springAOP</tag>
+         
         <tag>框架</tag>
          
         <tag>spring配置</tag>
          
-        <tag>springAOP</tag>
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/05/21/2015-05-21-MyBatiesDemo1/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>搭建简单的MyBaties框架</title>
+        <pubTime>2015-05-21T08:05:12.000Z</pubTime>
+        
+        <tag>MyBaties</tag>
+         
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/05/07/2015-05-07-SpringMVCDemo2/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>注解方式实现登录，文件上传</title>
+        <pubTime>2015-05-07T13:58:18.000Z</pubTime>
+        
+        <tag>springMVC</tag>
+         
+        <tag>spring</tag>
+         
+        <tag>框架</tag>
+         
+        <tag>登陆</tag>
          
          
            
@@ -460,32 +456,36 @@
     </url>
 
     
+    
   <url>
-    <loc>https://bingoran.github.io/2015/05/07/2015-05-07-SpringMVCDemo2/</loc>
+    <loc>https://bingoran.github.io/2015/01/07/2015-01-07-springmec-ehcache/</loc>
     <lastmod>2015-07-21T16:23:28.000Z</lastmod>
     <data>
         <display>
-        <title>注解方式实现登录，文件上传</title>
-        <pubTime>2015-05-07T13:58:18.000Z</pubTime>
+        <title>Spring MVC3整合缓存Ehcache实现</title>
+        <pubTime>2015-01-07T13:12:29.000Z</pubTime>
         
+        <tag>软件配置</tag>
+         
         <tag>springMVC</tag>
          
-        <tag>spring</tag>
+        <tag>ehcache</tag>
          
-        <tag>框架</tag>
+        <tag>缓存</tag>
          
-        <tag>登陆</tag>
+        <tag>xhay</tag>
+         
+        <tag>web前端</tag>
          
          
            
              
-              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+              <breadCrumb title="java" url="https://bingoran.github.io/categories/java/"/>
           
         </display>
     </data>
     </url>
 
-    
     
     
 </urlset>

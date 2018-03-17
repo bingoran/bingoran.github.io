@@ -835,11 +835,11 @@ resultType表示从这条语句中返回的期望类型的类的完全限定名�
     
       <category term="spring" scheme="https://bingoran.github.io/tags/spring/"/>
     
+      <category term="springAOP" scheme="https://bingoran.github.io/tags/springAOP/"/>
+    
       <category term="框架" scheme="https://bingoran.github.io/tags/%E6%A1%86%E6%9E%B6/"/>
     
       <category term="spring配置" scheme="https://bingoran.github.io/tags/spring%E9%85%8D%E7%BD%AE/"/>
-    
-      <category term="springAOP" scheme="https://bingoran.github.io/tags/springAOP/"/>
     
   </entry>
   
@@ -877,11 +877,11 @@ resultType表示从这条语句中返回的期望类型的类的完全限定名�
     
       <category term="spring" scheme="https://bingoran.github.io/tags/spring/"/>
     
-      <category term="springIOC" scheme="https://bingoran.github.io/tags/springIOC/"/>
-    
       <category term="框架" scheme="https://bingoran.github.io/tags/%E6%A1%86%E6%9E%B6/"/>
     
       <category term="spring配置" scheme="https://bingoran.github.io/tags/spring%E9%85%8D%E7%BD%AE/"/>
+    
+      <category term="springIOC" scheme="https://bingoran.github.io/tags/springIOC/"/>
     
   </entry>
   
