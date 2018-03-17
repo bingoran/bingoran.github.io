@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2017/05/25/2017-5-25-ViewController-Life-Cycle/</loc>
+    <lastmod>2017-05-26T07:22:30.000Z</lastmod>
+    <data>
+        <display>
+        <title></title>
+        <pubTime>2017-05-25T09:14:19.000Z</pubTime>
+        
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>https://bingoran.github.io/2017/05/20/2017-5-20-Jenkins/</loc>
+    <lastmod>2017-05-22T02:40:43.000Z</lastmod>
+    <data>
+        <display>
+        <title>jenkins+gitlab+fir.im持续集成环境搭建</title>
+        <pubTime>2017-05-20T12:23:10.000Z</pubTime>
+        
+        <tag>工具</tag>
+         
+        <tag>iOS</tag>
+         
+        <tag>jenkins</tag>
+         
+        <tag>gitlab</tag>
+         
+        <tag>fir.im</tag>
+         
+        <tag>iOS持续集成环境搭建</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+  <url>
+    <loc>https://bingoran.github.io/2017/01/05/2017-1-05-CocoapodsCreatpodspec/</loc>
+    <lastmod>2017-01-05T07:32:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>Cocoapods上创建专属的podspec</title>
+        <pubTime>2017-01-05T12:23:10.000Z</pubTime>
+        
+        <tag>IOS</tag>
+         
+        <tag>工具</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/09/03/2015-9-03-IOSAchive/</loc>
+    <lastmod>2015-09-03T16:44:29.000Z</lastmod>
+    <data>
+        <display>
+        <title>Ios 7.1 以上系统企业级发布解决方案</title>
+        <pubTime>2015-09-03T14:53:14.000Z</pubTime>
+        
+        <tag>IOS</tag>
+         
+        <tag>企业发布</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/09/01/2015-9-01-KVC-KVO/</loc>
+    <lastmod>2015-09-02T17:11:48.000Z</lastmod>
+    <data>
+        <display>
+        <title>KVO与KVC</title>
+        <pubTime>2015-09-01T14:53:14.000Z</pubTime>
+        
+        <tag>IOS</tag>
+         
+        <tag>KVO</tag>
+         
+        <tag>KVC</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/08/30/2015-8-30-NSOperation/</loc>
+    <lastmod>2015-09-01T16:22:46.000Z</lastmod>
+    <data>
+        <display>
+        <title>多线程之——浅谈NSOperation和NSOperationQueue</title>
+        <pubTime>2015-08-30T14:53:14.000Z</pubTime>
+        
+        <tag>IOS</tag>
+         
+        <tag>NSOperation</tag>
+         
+        <tag>NSOperationQueue</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/08/29/2015-8-29-NSThread/</loc>
+    <lastmod>2015-08-31T17:00:29.000Z</lastmod>
+    <data>
+        <display>
+        <title>多线程之——NSThread</title>
+        <pubTime>2015-08-29T14:53:14.000Z</pubTime>
+        
+        <tag>IOS</tag>
+         
+        <tag>NSThread</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/04/27/2015-4-27-Canvas-tranfrom/</loc>
+    <lastmod>2015-08-30T16:31:07.000Z</lastmod>
+    <data>
+        <display>
+        <title>Canvas斜切快速实现</title>
+        <pubTime>2015-04-27T14:53:14.000Z</pubTime>
+        
+        <tag>canvas</tag>
+         
+        <tag>斜切风格</tag>
+         
+         
+           
+             
+              <breadCrumb title="技术实现" url="https://bingoran.github.io/categories/%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/08/27/2015-8-27-UITableViewControllerReuse/</loc>
+    <lastmod>2015-08-30T16:21:11.000Z</lastmod>
+    <data>
+        <display>
+        <title>UITableViewCell的重用机制</title>
+        <pubTime>2015-08-27T14:53:14.000Z</pubTime>
+        
+        <tag>IOS</tag>
+         
+        <tag>UITableViewCell</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/08/28/2015-8-28-GCD/</loc>
+    <lastmod>2015-08-30T16:21:03.000Z</lastmod>
+    <data>
+        <display>
+        <title>多线程之——GCD(Grand Central Dispatch)</title>
+        <pubTime>2015-08-28T14:53:14.000Z</pubTime>
+        
+        <tag>IOS</tag>
+         
+        <tag>GCD</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/07/27/2015-7-27-IOSControllerLoad/</loc>
+    <lastmod>2015-08-28T14:10:22.000Z</lastmod>
+    <data>
+        <display>
+        <title>ViewController中LoadView,ViewDidLoad,ViewDidUnload...的调用次序及调用方法的总结</title>
+        <pubTime>2015-07-27T14:53:14.000Z</pubTime>
+        
+        <tag>IOS</tag>
+         
+        <tag>ViewController方法调用次序</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/06/27/2015-6-27-tranfromScreen/</loc>
+    <lastmod>2015-08-27T15:33:04.000Z</lastmod>
+    <data>
+        <display>
+        <title>iOS强制屏幕旋转</title>
+        <pubTime>2015-06-27T14:53:14.000Z</pubTime>
+        
+        <tag>IOS</tag>
+         
+        <tag>转屏</tag>
+         
+         
+           
+             
+              <breadCrumb title="IOS" url="https://bingoran.github.io/categories/IOS/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/05/21/2015-05-21-MyBatiesDemo1/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>搭建简单的MyBaties框架</title>
+        <pubTime>2015-05-21T08:05:12.000Z</pubTime>
+        
+        <tag>MyBaties</tag>
+         
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/01/07/2015-01-07-springmec-ehcache/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring MVC3整合缓存Ehcache实现</title>
+        <pubTime>2015-01-07T13:12:29.000Z</pubTime>
+        
+        <tag>软件配置</tag>
+         
+        <tag>springMVC</tag>
+         
+        <tag>ehcache</tag>
+         
+        <tag>缓存</tag>
+         
+        <tag>xhay</tag>
+         
+        <tag>web前端</tag>
+         
+         
+           
+             
+              <breadCrumb title="java" url="https://bingoran.github.io/categories/java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/04/09/2015-04-09-Spring3test/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring的简单配置</title>
+        <pubTime>2015-04-09T11:48:06.000Z</pubTime>
+        
+        <tag>spring</tag>
+         
+        <tag>springIOC</tag>
+         
+        <tag>框架</tag>
+         
+        <tag>spring配置</tag>
+         
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/04/09/2015-04-09-Spring3AOP/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring AOP的应用</title>
+        <pubTime>2015-04-09T12:35:24.000Z</pubTime>
+        
+        <tag>spring</tag>
+         
+        <tag>框架</tag>
+         
+        <tag>spring配置</tag>
+         
+        <tag>springAOP</tag>
+         
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2014/12/18/2014-12-18-redmine-Subversion/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>bitnami-redmine自带的Subversion 配置</title>
+        <pubTime>2014-12-18T14:56:13.000Z</pubTime>
+        
+        <tag>bitnami</tag>
+         
+        <tag>redmine</tag>
+         
+        <tag>subversion</tag>
+         
+        <tag>软件配置</tag>
+         
+         
+           
+             
+              <breadCrumb title="工具配置" url="https://bingoran.github.io/categories/software/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2014/12/27/2014-12-27-Subversion/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>快速搭建subversion服务器</title>
+        <pubTime>2014-12-27T14:53:14.000Z</pubTime>
+        
+        <tag>bitnami</tag>
+         
+        <tag>redmine</tag>
+         
+        <tag>subversion</tag>
+         
+        <tag>软件配置</tag>
+         
+        <tag>tortoisesvn</tag>
+         
+        <tag>svn</tag>
+         
+         
+           
+             
+              <breadCrumb title="工具配置" url="https://bingoran.github.io/categories/software/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/04/24/2015-04-24-SpringMVCDemo1/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>搭建SpringMVC框架,实现简单登陆功能</title>
+        <pubTime>2015-04-24T01:56:08.000Z</pubTime>
+        
+        <tag>springMVC</tag>
+         
+        <tag>spring</tag>
+         
+        <tag>框架</tag>
+         
+        <tag>登陆</tag>
+         
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/05/07/2015-05-07-SpringMVCDemo2/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>注解方式实现登录，文件上传</title>
+        <pubTime>2015-05-07T13:58:18.000Z</pubTime>
+        
+        <tag>springMVC</tag>
+         
+        <tag>spring</tag>
+         
+        <tag>框架</tag>
+         
+        <tag>登陆</tag>
+         
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+</urlset>

@@ -1,0 +1,631 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="baidu-site-verification" content="HDUB7OSvsD" />
+  
+    <title>jenkins+gitlab+fir.im持续集成环境搭建 | bingoran blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="bingoran">
+    
+    <meta name="description" content="什么是持续集成持续集成(Continuous Integration)持续是指开发阶段，对项目进行持续性自动化编译、测试，以达到控制代码质量的手段。持续集成是一种软件开发实践。                                                                                      — MBALab
+持续集成工具Jenkins、Travis、Gitlab、buddybuild等都是常见的持续集成工具，虽然他们都可以用于持续集成，但是不乏有各自的优缺点。综合考虑，Jenkins目前是其中使用最广泛，最主流的持续集成工具，这篇文章也是主要围绕Jenkins进行展开来讲。Jenkins作为传统的工具，前身是Hudson，从04年到现在已经有十几年的发展历史。因为这个      工具比较常用，大家也比较认可，软件开发的各种实践也可以通过大量的插件组合来实现，可定制性也比较好。
+Jenkins1、那么Jenkins 有哪些功能呢？      （1）定时拉取代码并编译      （2）静态代码分析      （3）定时打包发布测试版      （4）自定义额外的操作，如跑单元测试等      （5）出错提醒    基本上都是持续集成实践中的要求和周边的一些实现措施，如提醒功能等，出错后及时提醒开发者修复，Jenkins 中通过配置 SMTP 配置信息（这个一般的邮件服务提供商都有提供），邮件模板等，创建事件触发器，在事件（如编译失败）发生时，及时发送邮件通知开发者，挺方便的。2、Jenkins流程">
+    
+    
+    <meta name="description" content="什么是持续集成持续集成(Continuous Integration)持续是指开发阶段，对项目进行持续性自动化编译、测试，以达到控制代码质量的手段。持续集成是一种软件开发实践。                                                                                      — MBALab
+持续集成工具Jenkins、Tra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jenkins+gitlab+fir.im持续集成环境搭建">
+<meta property="og:url" content="https://bingoran.github.io/2017/05/20/2017-5-20-Jenkins/index.html">
+<meta property="og:site_name" content="bingoran blog">
+<meta property="og:description" content="什么是持续集成持续集成(Continuous Integration)持续是指开发阶段，对项目进行持续性自动化编译、测试，以达到控制代码质量的手段。持续集成是一种软件开发实践。                                                                                      — MBALab
+持续集成工具Jenkins、Tra">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/1.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/2.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/3.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/4.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/5.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/6.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/7.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/8.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/9.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/10.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/11.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/12.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/13.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/14.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/15.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/16.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/17.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/18.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/19.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/20.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/21.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/22.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/23.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/24.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/25.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/26.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/27.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/28.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/29.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/30.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/31.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/32.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/33.png">
+<meta property="og:image" content="https://bingoran.github.io/img/Jenkins/34.png">
+<meta property="og:updated_time" content="2017-05-22T02:40:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jenkins+gitlab+fir.im持续集成环境搭建">
+<meta name="twitter:description" content="什么是持续集成持续集成(Continuous Integration)持续是指开发阶段，对项目进行持续性自动化编译、测试，以达到控制代码质量的手段。持续集成是一种软件开发实践。                                                                                      — MBALab
+持续集成工具Jenkins、Tra">
+<meta name="twitter:image" content="https://bingoran.github.io/img/Jenkins/1.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="bingoran blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/fiy.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/logo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/logo.png">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/plan/plan.css">
+    <link rel="stylesheet" href="/high/ht.css">
+    <script type="text/javascript" src="//api.hitokoto.us/rand?encode=js&charset=utf-8"></script>
+    <script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+</head>
+
+  <body>
+    <header>
+      <a title="亲，点我放松一下吧~！(单击启动，双击停止)" id="hig" style="float:right;" href="javascript:void(0);" onclick="hig();" ondblclick="location.reload(true);">^_^嗨一下</a>
+<div id="wind" style="display:none">
+    <div id="plane" class="front">  
+        <textarea class="message">感谢您来访ran之家，欢迎常来。----ran^v^</textarea>
+        <button class="send"> 起飞 </button> <br/>
+        <div id="plane_bottom">
+            <a href="javascript:;" id="plane_close"> X </a>
+        </div>
+    </div>
+
+    <div id="wind_container" class="beginning">
+        <div id="left-wing">
+            <div class="top_left curvable"> </div>
+            <div class="bottom_left curvable"> </div>
+            <div class="wing wing1"></div>
+            <div class="wing wing2"></div>
+        </div>
+
+        <div id="right-wing">
+            <div class="top_right curvable"> </div>
+            <div class="bottom_right curvable"> </div>
+            <div class="wing wing3"></div>
+            <div class="wing wing4"></div>
+        </div>
+
+    </div>
+
+</div>
+<div>
+	
+		<div id="imglogo">
+			<a href="javascript:void(0);"><img src="/img/logo.png" alt="bingoran blog" title="bingoran blog"/></a>
+		</div>
+		
+		<div id="textlogo">
+			<h1 class="site-name"><a href="/" title="bingoran blog">bingoran blog</a></h1>
+			<h2 class="blog-motto"><script>hitokoto()</script></h2>
+		</div>
+		<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+		</a></div>
+		<nav class="animated">
+			<ul>
+				<ul>
+				 
+					<li><a href="/">主页</a></li>
+				
+					<li><a href="/archives">归档</a></li>
+				
+					<li><a href="/about">关于</a></li>
+				
+				<li>
+					
+					<form class="search" action="http://zhannei.baidu.com/cse/search" target="_blank">
+						<label>Search</label>
+					<input name="s" type="hidden" value= 11705943999323333673 >
+					<input type="text" name="q" size="30" placeholder="搜索"><br>
+					</form>
+				
+				</li>
+			</ul>
+		</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/05/20/2017-5-20-Jenkins/" title="jenkins+gitlab+fir.im持续集成环境搭建" itemprop="url">jenkins+gitlab+fir.im持续集成环境搭建</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="https://bingoran.github.io/about" title="bingoran" target="_blank" itemprop="author">bingoran</a>
+		
+  <p class="article-time">
+    <time datetime="2017-05-20T12:23:10.000Z" itemprop="datePublished"> 发表于 May 20 2017</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是持续集成"><span class="toc-text">什么是持续集成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持续集成工具"><span class="toc-text">持续集成工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jenkins"><span class="toc-text">Jenkins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平台搭建"><span class="toc-text">平台搭建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins的安装和启动"><span class="toc-text">Jenkins的安装和启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#完整的持续集成流程"><span class="toc-text">完整的持续集成流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#鸡汤来一发"><span class="toc-text">鸡汤来一发</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="什么是持续集成">什么是持续集成</h3><p>持续集成(Continuous Integration)持续是指开发阶段，对项目进行持续性自动化编译、测试，以达到控制代码质量的手段。持续集成是一种软件开发实践。<br>                                                                                      — MBALab</p>
+<h3 id="持续集成工具">持续集成工具</h3><p>Jenkins、Travis、Gitlab、buddybuild等都是常见的持续集成工具，虽然他们都可以用于持续集成，但是不乏有各自的优缺点。综合考虑，Jenkins目前是其中使用最广泛，最主流的持续集成工具，这篇文章也是主要围绕Jenkins进行展开来讲。<br>Jenkins作为传统的工具，前身是Hudson，从04年到现在已经有十几年的发展历史。因为这个      工具比较常用，大家也比较认可，软件开发的各种实践也可以通过大量的插件组合来实现，可定制性也比较好。</p>
+<h3 id="Jenkins">Jenkins</h3><p>1、那么Jenkins 有哪些功能呢？<br>      （1）定时拉取代码并编译<br>      （2）静态代码分析<br>      （3）定时打包发布测试版<br>      （4）自定义额外的操作，如跑单元测试等<br>      （5）出错提醒<br>    基本上都是持续集成实践中的要求和周边的一些实现措施，如提醒功能等，出错后及时提醒开发者修复，Jenkins 中通过配置 SMTP 配置信息（这个一般的邮件服务提供商都有提供），邮件模板等，创建事件触发器，在事件（如编译失败）发生时，及时发送邮件通知开发者，挺方便的。<br>2、Jenkins流程<br><img src="/img/Jenkins/1.png" alt="如图"><br><a id="more"></a></p>
+<h3 id="平台搭建">平台搭建</h3><h2 id="Jenkins的安装和启动">Jenkins的安装和启动</h2><p>Jenkins是基于Java开发的一套持续集成系统，所以在安装的时候需要依赖系统的Java环境。（这里的安装是基于homebrew的）<br>（1）java 环境准备<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew cask install java</div></pre></td></tr></table></figure></p>
+<p>（2）Jenkins安装<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install Jenkins</div></pre></td></tr></table></figure></p>
+<p>（3）Jenkins启动和停止<br>因为homebrew已经集成了服务的暂停和启动功能，所以直接使用homebrew的服务暂停和启动命令<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">启动：brew services start Jenkins</div><div class="line">暂停：brew services stop Jenkins</div></pre></td></tr></table></figure></p>
+<p>（4）Jenkins访问<br>经过上面的步骤，我们就可以输入<a href="http://localhost:8080进行本地访问了，不出意外，我们就可以进行首次的Jenkins访问了" target="_blank" rel="external">http://localhost:8080进行本地访问了，不出意外，我们就可以进行首次的Jenkins访问了</a><br><img src="/img/Jenkins/2.png" alt="如图"><br>首次访问会首先进入初始访问界面，这里需要我们输入初始密码，当然在我们安装Jenkins的时候系统为我们创建了一个初始密码，在~/.jenkins/secrets/initialAdminPassword这个文件目录下，我们可以通过vim命令进行查看然后copy到这里<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim ~/.jenkins/secrets/initialAdminPassword</div></pre></td></tr></table></figure></p>
+<p>到这里我们就可以进入下一步操作了，点击Continue<br><img src="/img/Jenkins/3.png" alt="如图"><br>这里会有两个选项，第一个的大概意思就是Jenkins建议安装的插件组合，第二个就是根据自己的需要自己定制选择插件组合，这里我们选择第一项。接下来就是等待安装的过程。<br><img src="/img/Jenkins/4.png" alt="如图"><br><img src="/img/Jenkins/5.png" alt="如图"><br>上一步安装完了后浏览器会显示下面的界面<br><img src="/img/Jenkins/6.png" alt="如图"><br><img src="/img/Jenkins/7.png" alt="如图"><br><img src="/img/Jenkins/8.png" alt="如图"><br>到这一步，输入用户名密码等相关信息，就算大功告成了，此后我们还需要安装一些辅助插件。选择系统管理-&gt;插件管理<br><img src="/img/Jenkins/9.png" alt="如图"><br><img src="/img/Jenkins/10.png" alt="如图"><br>这里我们可以选择安装我们需要的插件，这里我们是用于iOS持续集成构建，所以我们要安装一些iOS相关的插件。<br>    （1）iOS专用：Xcode integration<br>    （2）Gitlab插件：GitLab Plugin<br>    （3）Git插件： Git plugin<br>    （4）签名证书管理插件: Credentials Plugin 和Keychains and Provisioning Profiles Management<br>    （5）脚本插件: Post-Build Script Plug-in<br>    （6）获取仓库提交的commit log： Git Changelog Plugin<br>等等其它： GIT plugin / SSH Credentials Plugin</p>
+<p>（5）iOS项目构建<br>经过前面的步骤和配置，我们就可以开始构建一个iOS项目了。点击创建一个新任务-&gt;输入构建项目名称<br><img src="/img/Jenkins/11.png" alt="如图"><br><img src="/img/Jenkins/12.png" alt="如图"><br>接下来我们就可以开始对项目进行配置了<br>1)   General<br>    这里主要是输入一些项目名称和项目描述之类的东西，一般没什么特殊的要求<br><img src="/img/Jenkins/13.png" alt="如图"><br>2）源码管理<br>这里主要是配置项目仓库访问路径和公钥，首先我们配置公钥，选择 Credentials进行项目公钥配置，这里的公钥配置和其它Git配置都差不多，所以不用多说，因为我们的本地一般已经配置好项目仓库的公钥，所以进入～/.ssh,找到相应的公钥，复制过来就好，如图<br><img src="/img/Jenkins/14.png" alt="如图"><br>我们的项目是托管在给gitlab上面的，所以我们选择Git，在Repository URL这里输入项目访问路径，Credentials选择我们刚刚配置好的公钥就好，然后我们可以在Branch Specifier (blank for ‘any’)这里输入我们需要构建的项目分支，如图所示<br><img src="/img/Jenkins/15.png" alt="如图"><br>3）构建触发器<br>  构建触发器，其实就是配置项目的构建自动构建周期，他的格式如下，如果有不懂的，点击后面的问好，他有关于这个的详细说明<br><img src="/img/Jenkins/16.png" alt="如图"><br>如图是点击问号后展示的格式说明<br><img src="/img/Jenkins/17.png" alt="如图"><br>4）构建环境设置<br>构建环境设置 iOS打包需要签名文件和证书，所以这部分我们勾选“Keychains and Code Signing Identities”和“Mobile Provisioning Profiles”。 这里我们又需要用到Jenkins的插件，在系统管理页面，选择“Keychains and Provisioning Profiles Management”<br><img src="/img/Jenkins/18.png" alt="如图"><br><img src="/img/Jenkins/19.png" alt="如图"><br>进入Keychains and Provisioning Profiles Management页面，点击“选择文件”按钮，分别上传自己的keychain和证书。上传成功后，我们再为keychain指明签名文件的名称。点击“Add Code Signing Identity”，最后添加成功后如下图所示：<br><img src="/img/Jenkins/20.png" alt="如图"><br>这个Keychain其实在/Users/管理员用户名/Library/keychains/login.keychain,当把这个Keychain设置好了之后，Jenkins会把这个Keychain拷贝到/Users/Shared/Jenkins/Library/keychains这里，(Library是隐藏文件)。Provisioning Profiles文件也直接拷贝，<br>Code Signing Identity 直接就是钥匙串里相应证书的名字<br><img src="/img/Jenkins/21.png" alt="如图"><br>好了现在我们回到项目配置的地方，选择刚刚配置好的东西就好，到此<br><img src="/img/Jenkins/22.png" alt="如图"><br>5）构建<br>  这是自动化设置的关键一步了，我们可以写一个配置脚本，也可以直接把配置写在这里，为了直观我直接把配置写在这里了：<br><img src="/img/Jenkins/23.png" alt="如图"><br><img src="/img/Jenkins/24.png" alt="如图"><br>以下我把配置贴出来<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 工程名</span></div><div class="line">APP_NAME=<span class="string">"ZUITool"</span></div><div class="line"></div><div class="line"><span class="comment"># 证书</span></div><div class="line">CODE_SIGN_DISTRIBUTION=<span class="string">"iPhone Developer: XXX (4QBP298QQK)"</span></div><div class="line"></div><div class="line"><span class="comment"># info.plist路径</span></div><div class="line">project_infoplist_path=<span class="string">"./<span class="variable">$&#123;APP_NAME&#125;</span>/Info.plist"</span></div><div class="line"></div><div class="line"><span class="comment">#取版本号</span></div><div class="line">bundleShortVersion=$(/usr/libexec/PlistBuddy -c <span class="string">"print CFBundleShortVersionString"</span> <span class="string">"<span class="variable">$&#123;project_infoplist_path&#125;</span>"</span>)</div><div class="line"></div><div class="line"><span class="comment">#取build值</span></div><div class="line">bundleVersion=$(/usr/libexec/PlistBuddy -c <span class="string">"print CFBundleVersion"</span> <span class="string">"<span class="variable">$&#123;project_infoplist_path&#125;</span>"</span>)</div><div class="line"></div><div class="line"><span class="comment">#DATE="$(date +%Y%m%d)"</span></div><div class="line">IPANAME=<span class="string">"<span class="variable">$&#123;APP_NAME&#125;</span>_V<span class="variable">$&#123;bundleShortVersion&#125;</span>_<span class="variable">$&#123;DATE&#125;</span>.ipa"</span></div><div class="line"></div><div class="line"><span class="comment">#要上传的ipa文件路径</span></div><div class="line">IPA_PATH=<span class="string">"<span class="variable">$HOME</span>/<span class="variable">$&#123;IPANAME&#125;</span>"</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$&#123;IPA_PATH&#125;</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;IPA_PATH&#125;</span>"</span>&gt;&gt; text.txt</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"=================clean================="</span></div><div class="line"><span class="comment">#xcodebuild -workspace "$&#123;APP_NAME&#125;.xcworkspace" -scheme "$&#123;APP_NAME&#125;" -configuration 'Release' clean</span></div><div class="line">xcodebuild clean</div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">"+++++++++++++++++build+++++++++++++++++"</span></div><div class="line"><span class="comment">#xcodebuild -workspace "$&#123;APP_NAME&#125;.xcworkspace" -scheme "$&#123;APP_NAME&#125;" -sdk iphoneos -configuration 'Release' CODE_SIGN_IDENTITY="$&#123;CODE_SIGN_DISTRIBUTION&#125;" SYMROOT='$(PWD)'</span></div><div class="line"><span class="comment">#xcodebuild -workspace "$&#123;APP_NAME&#125;.xcworkspace" -scheme "$&#123;APP_NAME&#125;" -configuration Release</span></div><div class="line">xcodebuild -workspace ZUITool.xcworkspace -scheme ZUITool -configuration Release</div><div class="line"></div><div class="line"><span class="comment">#xcrun -sdk iphoneos PackageApplication "./Release-iphoneos/$&#123;APP_NAME&#125;.app" -o ~/Desktop/ipaF/"$&#123;IPANAME&#125;"</span></div><div class="line"><span class="comment">#xcrun -sdk iphoneos -v PackageApplication "./Release-iphoneos/$&#123;APP_NAME&#125;.app" -o ~/Desktop/ipaF/"$&#123;IPANAME&#125;.ipa"</span></div><div class="line">xcrun -sdk iphoneos -v PackageApplication /Users/luobing/Library/Developer/Xcode/DerivedData/ZUITool-gaqncfkjsvbmadavdavhfdqdlupo/Build/Products/Release-iphoneos/ZUITool.app -o /Users/luobing/.jenkins/workspace/IosBuildingTest/build/Release-iphoneos/ZUITool.ipa</div></pre></td></tr></table></figure></p>
+<p>值得一题的是，这里的自动编译和打包用的是 xcodebuild xcrun ，关于xcodebuild xcrun的使用这里不多讲，网上一大堆，要是有不明白的，自己自行谷歌。</p>
+<p>6）fir上传设置<br>上传到fir需要用到一个插件，这里是插件下载地址<br><a href="http://7xju1s.com1.z0.glb.clouddn.com/fir-plugin(6).hpi，插件下载完成后，配置到Jenkins里边" target="_blank" rel="external">http://7xju1s.com1.z0.glb.clouddn.com/fir-plugin(6).hpi，插件下载完成后，配置到Jenkins里边</a><br><img src="/img/Jenkins/25.png" alt="如图"><br><img src="/img/Jenkins/26.png" alt="如图"><br><img src="/img/Jenkins/27.png" alt="如图"><br>做完上面这一步，我们回到刚刚的项目，上传到fir其实有两种方法，一种是直接配置到脚本里边，一种是在是直接配置增加构建后操作步骤，这里主要介绍后一种，点击构建后操作步骤<br><img src="/img/Jenkins/28.png" alt="如图"><br>安装完fir的插件，这里会多一项选择，Upload to fir.im，选择这一项<br><img src="/img/Jenkins/29.png" alt="如图"><br>配置插件</p>
+<ol>
+<li>fir.im Token（必填）<br>fir.im Token 查看方法：直接点击 API token 进行查看.<br><img src="/img/Jenkins/30.png" alt="如图"><br>其它的都是选填的，这里不做介绍。我们只要保证项目能上传到fir上就行。<br>做完这一步我们就大功告成了，然后我们可以进行测试构建了，保存后回到刚果创建的项目，点击立即构建<br><img src="/img/Jenkins/31.png" alt="如图"><br>构建一次，各个颜色代表的意义如下：<br><img src="/img/Jenkins/32.png" alt="如图"><br>如果构建完后是蓝色的球，恭喜你，就构建成功了。如果构建失败了，可以查看构建日志，找到错误原因。<br><img src="/img/Jenkins/33.png" alt="如图"></li>
+</ol>
+<h3 id="完整的持续集成流程">完整的持续集成流程</h3><p>经过上面的持续化集成，现在我们就拥有了如下完整持续集成的流程<br><img src="/img/Jenkins/34.png" alt="如图"></p>
+<h3 id="鸡汤来一发">鸡汤来一发</h3><p>要么忙着活，要么忙着死 —— 《肖生克的救赎》</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/IOS/">IOS</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/工具/">工具</a><a href="/tags/iOS/">iOS</a><a href="/tags/jenkins/">jenkins</a><a href="/tags/gitlab/">gitlab</a><a href="/tags/fir-im/">fir.im</a><a href="/tags/iOS持续集成环境搭建/">iOS持续集成环境搭建</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="https://bingoran.github.io/2017/05/20/2017-5-20-Jenkins/" data-title="jenkins+gitlab+fir.im持续集成环境搭建 | bingoran blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/05/25/2017-5-25-ViewController-Life-Cycle/" title="">
+  <strong>上一篇：</strong><br/>
+  <span>
+  (no title)</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/01/05/2017-1-05-CocoapodsCreatpodspec/"  title="Cocoapods上创建专属的podspec">
+ <strong>下一篇：</strong><br/> 
+ <span>Cocoapods上创建专属的podspec
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2017/05/20/2017-5-20-Jenkins/" data-title="jenkins+gitlab+fir.im持续集成环境搭建" data-url="https://bingoran.github.io/2017/05/20/2017-5-20-Jenkins/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是持续集成"><span class="toc-text">什么是持续集成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#持续集成工具"><span class="toc-text">持续集成工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jenkins"><span class="toc-text">Jenkins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平台搭建"><span class="toc-text">平台搭建</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins的安装和启动"><span class="toc-text">Jenkins的安装和启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#完整的持续集成流程"><span class="toc-text">完整的持续集成流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#鸡汤来一发"><span class="toc-text">鸡汤来一发</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+			<li><a href="/categories/Framework/" title="Framework">Framework<sup>5</sup></a></li>
+		
+			<li><a href="/categories/IOS/" title="IOS">IOS<sup>10</sup></a></li>
+		
+			<li><a href="/categories/java/" title="java">java<sup>1</sup></a></li>
+		
+			<li><a href="/categories/software/" title="工具配置">工具配置<sup>2</sup></a></li>
+		
+			<li><a href="/categories/技术实现/" title="技术实现">技术实现<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/IOS/" title="IOS">IOS<sup>9</sup></a></li>
+		
+			<li><a href="/tags/框架/" title="框架">框架<sup>4</sup></a></li>
+		
+			<li><a href="/tags/spring/" title="spring">spring<sup>4</sup></a></li>
+		
+			<li><a href="/tags/软件配置/" title="软件配置">软件配置<sup>3</sup></a></li>
+		
+			<li><a href="/tags/springMVC/" title="springMVC">springMVC<sup>3</sup></a></li>
+		
+			<li><a href="/tags/登陆/" title="登陆">登陆<sup>2</sup></a></li>
+		
+			<li><a href="/tags/subversion/" title="subversion">subversion<sup>2</sup></a></li>
+		
+			<li><a href="/tags/bitnami/" title="bitnami">bitnami<sup>2</sup></a></li>
+		
+			<li><a href="/tags/spring配置/" title="spring配置">spring配置<sup>2</sup></a></li>
+		
+			<li><a href="/tags/工具/" title="工具">工具<sup>2</sup></a></li>
+		
+			<li><a href="/tags/redmine/" title="redmine">redmine<sup>2</sup></a></li>
+		
+			<li><a href="/tags/GCD/" title="GCD">GCD<sup>1</sup></a></li>
+		
+			<li><a href="/tags/web前端/" title="web前端">web前端<sup>1</sup></a></li>
+		
+			<li><a href="/tags/xhay/" title="xhay">xhay<sup>1</sup></a></li>
+		
+			<li><a href="/tags/缓存/" title="缓存">缓存<sup>1</sup></a></li>
+		
+			<li><a href="/tags/springAOP/" title="springAOP">springAOP<sup>1</sup></a></li>
+		
+			<li><a href="/tags/ehcache/" title="ehcache">ehcache<sup>1</sup></a></li>
+		
+			<li><a href="/tags/转屏/" title="转屏">转屏<sup>1</sup></a></li>
+		
+			<li><a href="/tags/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/tags/MyBaties/" title="MyBaties">MyBaties<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/IOS/" style="font-size: 20px;">IOS</a> <a href="/tags/KVC/" style="font-size: 10px;">KVC</a> <a href="/tags/KVO/" style="font-size: 10px;">KVO</a> <a href="/tags/MyBaties/" style="font-size: 10px;">MyBaties</a> <a href="/tags/NSOperation/" style="font-size: 10px;">NSOperation</a> <a href="/tags/NSOperationQueue/" style="font-size: 10px;">NSOperationQueue</a> <a href="/tags/NSThread/" style="font-size: 10px;">NSThread</a> <a href="/tags/UITableViewCell/" style="font-size: 10px;">UITableViewCell</a> <a href="/tags/ViewController方法调用次序/" style="font-size: 10px;">ViewController方法调用次序</a> <a href="/tags/bitnami/" style="font-size: 12.5px;">bitnami</a> <a href="/tags/canvas/" style="font-size: 10px;">canvas</a> <a href="/tags/ehcache/" style="font-size: 10px;">ehcache</a> <a href="/tags/fir-im/" style="font-size: 10px;">fir.im</a> <a href="/tags/gitlab/" style="font-size: 10px;">gitlab</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iOS持续集成环境搭建/" style="font-size: 10px;">iOS持续集成环境搭建</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/redmine/" style="font-size: 12.5px;">redmine</a> <a href="/tags/spring/" style="font-size: 17.5px;">spring</a> <a href="/tags/springAOP/" style="font-size: 10px;">springAOP</a> <a href="/tags/springIOC/" style="font-size: 10px;">springIOC</a> <a href="/tags/springMVC/" style="font-size: 15px;">springMVC</a> <a href="/tags/spring配置/" style="font-size: 12.5px;">spring配置</a> <a href="/tags/subversion/" style="font-size: 12.5px;">subversion</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/tortoisesvn/" style="font-size: 10px;">tortoisesvn</a> <a href="/tags/web前端/" style="font-size: 10px;">web前端</a> <a href="/tags/xhay/" style="font-size: 10px;">xhay</a> <a href="/tags/企业发布/" style="font-size: 10px;">企业发布</a> <a href="/tags/工具/" style="font-size: 12.5px;">工具</a> <a href="/tags/斜切风格/" style="font-size: 10px;">斜切风格</a> <a href="/tags/框架/" style="font-size: 17.5px;">框架</a> <a href="/tags/登陆/" style="font-size: 12.5px;">登陆</a> <a href="/tags/缓存/" style="font-size: 10px;">缓存</a> <a href="/tags/转屏/" style="font-size: 10px;">转屏</a> <a href="/tags/软件配置/" style="font-size: 15px;">软件配置</a>
+    </div>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://www.xrpmoon.com/blog/" target="_blank" title=" Java与Ripple怎么玩？">鹏凌三千</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://likai1024.com/" target="_blank" title=" 李凯的博客热爱开源文化">李凯的博客</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bininhere.github.io/" target="_blank" title=" 大牛的博客">BINBLOG</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello,I&#39;m ran. For now I&#39;m a graduate student in Chongqing University of Technology.  <br/>
+			I&#39;ll share my learning experience with you at this blog.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/u/3151858255" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/https://github.com/bingoran" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:751384171@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> © 2018 
+		
+		<a href="https://bingoran.github.io/about" target="_blank" title="bingoran">bingoran</a>
+		
+		   
+
+		
+		<a href="https://bingoran.github.io/baidusitemap.xml" target="_blank" title="baidusitemap.xml">sitemap</a>
+		
+		</p>
+
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/plan/plan.js"></script>
+<script src="/high/Crazy.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+
+  $(".hitokoto > a").attr('href','javascript:void(0);');
+  $(".hitokoto").attr('title','');
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      aah = $('article h3'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(aah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+/*$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});*/
+var $this = $('.share');
+$this.append('<div class="bdsharebuttonbox"><a href="#" class="bds_more" style="padding: 0px;" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a></div>');
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"LBingRan"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a8455ea2a3ca861dfd7eaa5f412ed81a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+  </body>
+</html>
