@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://bingoran.github.io/"/>
-  <updated>2017-05-26T07:22:30.000Z</updated>
+  <updated>2018-10-11T09:28:15.679Z</updated>
   <id>https://bingoran.github.io/</id>
   
   <author>
@@ -20,9 +20,10 @@
     <link href="https://bingoran.github.io/2017/05/25/2017-5-25-ViewController-Life-Cycle/"/>
     <id>https://bingoran.github.io/2017/05/25/2017-5-25-ViewController-Life-Cycle/</id>
     <published>2017-05-25T09:14:19.000Z</published>
-    <updated>2017-05-26T07:22:30.000Z</updated>
+    <updated>2018-10-11T09:28:15.679Z</updated>
     
     <content type="html"><![CDATA[<h1 id="ViewController_的生命周期">ViewController 的生命周期</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">相信对于一个软件开发者来说，生命周期一定不是一个陌生的词语，我们软件开发所做的事情都是按照程序的生命周期进行的，在这个生命周期里边，我们和操作系统打着交道。在大部分的时间里，我们实际上并没有程序“控制权”，而是在配合系统或者一个类“正确”的完成他们的生命周期。以 ViewController 为例子，在 ViewController 中有一系列的生命周期方法，例如 loadView：、viewDidLoad：、viewWillAppear：、viewDidAppear、viewWillDisappear、viewDidDisappear 等等方法，这些方法似乎就像一个情报员，时刻告诉我们 ViewController 现在完成了什么、正在干什么、将要干什么。而我们只需要在正确的时间做正确的事情就行了，我们可以在某些方法里添加一些我们希望看到的视图、效果，而通过这些大量的定制组合就组成了我们的APP应用。</div><div class="line">既然我们都是按照程序的生命周期在完成我们的工作，那么我们作为开发者来说，正确的掌握生命周期内的每个方法就显得尤为重要了，这不仅仅是为了代码看起来更加的优雅，也是为了正确的完成系统交给我们的任务。</div><div class="line">一个类的生命周期，一定从 init... 开始，但实际开发中，ViewController 的入口几乎 99% 以上是 viewDidLoad ，这时，初始化已经完成，UIViewController 的属性 view 也已经被赋值，如果你重写了 loadView ，最后也会调用 viewDidLoad ，因此，这是个初始化子视图的好地方，这是因为：</div><div class="line">1.	viewDidLoad 只会被调用一次</div><div class="line">2.	如果使用 Autolayout ，这时 子视图的 frame 属性还没有被设置，没有被设置，没有被设置 ，这几乎是你唯一设置绑定的时机（用编码方式设置自动布局），另一个时机是Storyboard中的手动绑定，这当然在viewDidLoad被调用之前。</div><div class="line">最近刚好在 ViewController 的生命周期上面遇到了一些困扰，所以干脆研究下 ViewController 的生命周期</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="ViewController_的初始化">ViewController 的初始化</h2><p>平常我们接触的 ViewController 初始化无非两种方式，一种是通过 Storyboard（Xib类似）初始化，而另外一种就是我们直接通过代码的方式初始化。当然，这两种方式初始化过程是有细微差别的，下面将分别介绍这两种方式的不同初始化过程</p>
 <h3 id="Storyboard_方式的初始化">Storyboard 方式的初始化</h3><p>Storyboard 在初始化阶段是由 <code>init(coder:)</code> -&gt; <code>awakeFromNib()</code> 进行的。</p>
 <h4 id="init(coder:)">init(coder:)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 当使用 Storyboard 时，控制器的构造器为 init(coder:)</div><div class="line">2. 该构造器为必需构造器，如果重写其他构造器，则必须重写该构造器</div><div class="line">3. 该构造器为可失败构造器，即有可能构造失败，返回 nil</div><div class="line">4. 该方法来源自 NSCoding 协议，而 UIViewController 遵从这一协议</div><div class="line">5. 该方法被调用意味着控制器有可能（并非一定）在未来会显示</div><div class="line">6. 在控制器生命周期中，该方法只会被调用一次</div></pre></td></tr></table></figure>
@@ -123,7 +124,7 @@
     
     <summary type="html">
     
-      &lt;h1 id=&quot;ViewController_的生命周期&quot;&gt;ViewController 的生命周期&lt;/h1&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;
+      &lt;h1 id=&quot;ViewController_的生命周期&quot;&gt;ViewController 的生命周期&lt;/h1&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;相信对于一个软件开发者来说，生命周期一定不是一个陌生的词语，我们软件开发所做的事情都是按照程序的生命周期进行的，在这个生命周期里边，我们和操作系统打着交道。在大部分的时间里，我们实际上并没有程序“控制权”，而是在配合系统或者一个类“正确”的完成他们的生命周期。以 ViewController 为例子，在 ViewController 中有一系列的生命周期方法，例如 loadView：、viewDidLoad：、viewWillAppear：、viewDidAppear、viewWillDisappear、viewDidDisappear 等等方法，这些方法似乎就像一个情报员，时刻告诉我们 ViewController 现在完成了什么、正在干什么、将要干什么。而我们只需要在正确的时间做正确的事情就行了，我们可以在某些方法里添加一些我们希望看到的视图、效果，而通过这些大量的定制组合就组成了我们的APP应用。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;既然我们都是按照程序的生命周期在完成我们的工作，那么我们作为开发者来说，正确的掌握生命周期内的每个方法就显得尤为重要了，这不仅仅是为了代码看起来更加的优雅，也是为了正确的完成系统交给我们的任务。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;一个类的生命周期，一定从 init... 开始，但实际开发中，ViewController 的入口几乎 99% 以上是 viewDidLoad ，这时，初始化已经完成，UIViewController 的属性 view 也已经被赋值，如果你重写了 loadView ，最后也会调用 viewDidLoad ，因此，这是个初始化子视图的好地方，这是因为：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;1.	viewDidLoad 只会被调用一次&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2.	如果使用 Autolayout ，这时 子视图的 frame 属性还没有被设置，没有被设置，没有被设置 ，这几乎是你唯一设置绑定的时机（用编码方式设置自动布局），另一个时机是Storyboard中的手动绑定，这当然在viewDidLoad被调用之前。&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;最近刚好在 ViewController 的生命周期上面遇到了一些困扰，所以干脆研究下 ViewController 的生命周期&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -685,11 +686,11 @@ resultType表示从这条语句中返回的期望类型的类的完全限定名�
       <category term="Framework" scheme="https://bingoran.github.io/categories/Framework/"/>
     
     
-      <category term="springMVC" scheme="https://bingoran.github.io/tags/springMVC/"/>
-    
       <category term="spring" scheme="https://bingoran.github.io/tags/spring/"/>
     
       <category term="框架" scheme="https://bingoran.github.io/tags/%E6%A1%86%E6%9E%B6/"/>
+    
+      <category term="springMVC" scheme="https://bingoran.github.io/tags/springMVC/"/>
     
       <category term="登陆" scheme="https://bingoran.github.io/tags/%E7%99%BB%E9%99%86/"/>
     
@@ -766,11 +767,11 @@ resultType表示从这条语句中返回的期望类型的类的完全限定名�
       <category term="Framework" scheme="https://bingoran.github.io/categories/Framework/"/>
     
     
-      <category term="springMVC" scheme="https://bingoran.github.io/tags/springMVC/"/>
-    
       <category term="spring" scheme="https://bingoran.github.io/tags/spring/"/>
     
       <category term="框架" scheme="https://bingoran.github.io/tags/%E6%A1%86%E6%9E%B6/"/>
+    
+      <category term="springMVC" scheme="https://bingoran.github.io/tags/springMVC/"/>
     
       <category term="登陆" scheme="https://bingoran.github.io/tags/%E7%99%BB%E9%99%86/"/>
     
@@ -835,11 +836,11 @@ resultType表示从这条语句中返回的期望类型的类的完全限定名�
     
       <category term="spring" scheme="https://bingoran.github.io/tags/spring/"/>
     
-      <category term="springAOP" scheme="https://bingoran.github.io/tags/springAOP/"/>
-    
       <category term="框架" scheme="https://bingoran.github.io/tags/%E6%A1%86%E6%9E%B6/"/>
     
       <category term="spring配置" scheme="https://bingoran.github.io/tags/spring%E9%85%8D%E7%BD%AE/"/>
+    
+      <category term="springAOP" scheme="https://bingoran.github.io/tags/springAOP/"/>
     
   </entry>
   
@@ -877,11 +878,11 @@ resultType表示从这条语句中返回的期望类型的类的完全限定名�
     
       <category term="spring" scheme="https://bingoran.github.io/tags/spring/"/>
     
+      <category term="springIOC" scheme="https://bingoran.github.io/tags/springIOC/"/>
+    
       <category term="框架" scheme="https://bingoran.github.io/tags/%E6%A1%86%E6%9E%B6/"/>
     
       <category term="spring配置" scheme="https://bingoran.github.io/tags/spring%E9%85%8D%E7%BD%AE/"/>
-    
-      <category term="springIOC" scheme="https://bingoran.github.io/tags/springIOC/"/>
     
   </entry>
   

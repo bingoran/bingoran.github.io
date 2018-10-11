@@ -10,8 +10,7 @@
     
     <meta name="author" content="bingoran">
     
-    <meta name="description" content="ViewController 的生命周期123456相信对于一个软件开发者来说，生命周期一定不是一个陌生的词语，我们软件开发所做的事情都是按照程序的生命周期进行的，在这个生命周期里边，我们和操作系统打着交道。在大部分的时间里，我们实际上并没有程序“控制权”，而是在配合系统或者一个类“正确”的完成他们">
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="description" content="ViewController 的生命周期123456相信对于一个软件开发者来说，生命周期一定不是一个陌生的词语，我们软件开发所做的事情都是按照程序的生命周期进行的，在这个生命周期里边，我们和操作系统打着交道。在大部分的时间里，我们实际上并没有程序“控制权”，而是在配合系统或者一个类“正确”的完成他们的生命周期。以 ViewController 为例子，在 ViewController 中有一系列的生命周期方法，例如 loadView：、viewDidLoad：、viewWillAppear：、viewDidAppear、viewWillDisappear、viewDidDisappear 等等方法，这些方法似乎就像一个情报员，时刻告诉我们 ViewController 现在完成了什么、正在干什么、将要干什么。而我们只需要在正确的时间做正确的事情就行了，我们可以在某些方法里添加一些我们希望看到的视图、效果，而通过这些大量的定制组合就组成了我们的APP应用。既然我们都是按照程序的生命周期在完成我们的工作，那么我们作为开发者来说，正确的掌握生命周期内的每个方法就显得尤为重要了，这不仅仅是为了代码看起来更加的优雅，也是为了正确的完成系统交给我们的任务。一个类的生命周期，一定从 init... 开始，但实际开发中，ViewController 的入口几乎 99% 以上是 viewDidLoad ，这时，初始化已经完成，UIViewController 的属性 view 也已经被赋值，如果你重写了 loadView ，最后也会调用 viewDidLoad ，因此，这是个初始化子视图的好地方，这是因为：1.	viewDidLoad 只会被调用一次2.	如果使用 Autolayout ，这时 子视图的 frame 属性还没有被设置，没有被设置，没有被设置 ，这几乎是你唯一设置绑定的时机（用编码方式设置自动布局），另一个时机是Storyboard中的手动绑定，这当然在viewDidLoad被调用之前。最近刚好在 ViewController 的生命周期上面遇到了一些困扰，所以干脆研究下 ViewController 的生命周期">
     
     
     <meta name="description" content="ViewController 的生命周期123456相信对于一个软件开发者来说，生命周期一定不是一个陌生的词语，我们软件开发所做的事情都是按照程序的生命周期进行的，在这个生命周期里边，我们和操作系统打着交道。在大部分的时间里，我们实际上并没有程序“控制权”，而是在配合系统或者一个类“正确”的完成他们的生命周期。以 ViewController 为例子，在 ViewController 中有一系列的">
@@ -20,7 +19,7 @@
 <meta property="og:url" content="https://bingoran.github.io/2017/05/25/2017-5-25-ViewController-Life-Cycle/index.html">
 <meta property="og:site_name" content="bingoran blog">
 <meta property="og:description" content="ViewController 的生命周期123456相信对于一个软件开发者来说，生命周期一定不是一个陌生的词语，我们软件开发所做的事情都是按照程序的生命周期进行的，在这个生命周期里边，我们和操作系统打着交道。在大部分的时间里，我们实际上并没有程序“控制权”，而是在配合系统或者一个类“正确”的完成他们的生命周期。以 ViewController 为例子，在 ViewController 中有一系列的">
-<meta property="og:updated_time" content="2017-05-26T07:22:30.000Z">
+<meta property="og:updated_time" content="2018-10-11T09:28:15.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="bingoran blog">
 <meta name="twitter:description" content="ViewController 的生命周期123456相信对于一个软件开发者来说，生命周期一定不是一个陌生的词语，我们软件开发所做的事情都是按照程序的生命周期进行的，在这个生命周期里边，我们和操作系统打着交道。在大部分的时间里，我们实际上并没有程序“控制权”，而是在配合系统或者一个类“正确”的完成他们的生命周期。以 ViewController 为例子，在 ViewController 中有一系列的">
@@ -148,6 +147,7 @@
 		</div>
 		
 		<h1 id="ViewController_的生命周期">ViewController 的生命周期</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">相信对于一个软件开发者来说，生命周期一定不是一个陌生的词语，我们软件开发所做的事情都是按照程序的生命周期进行的，在这个生命周期里边，我们和操作系统打着交道。在大部分的时间里，我们实际上并没有程序“控制权”，而是在配合系统或者一个类“正确”的完成他们的生命周期。以 ViewController 为例子，在 ViewController 中有一系列的生命周期方法，例如 loadView：、viewDidLoad：、viewWillAppear：、viewDidAppear、viewWillDisappear、viewDidDisappear 等等方法，这些方法似乎就像一个情报员，时刻告诉我们 ViewController 现在完成了什么、正在干什么、将要干什么。而我们只需要在正确的时间做正确的事情就行了，我们可以在某些方法里添加一些我们希望看到的视图、效果，而通过这些大量的定制组合就组成了我们的APP应用。</div><div class="line">既然我们都是按照程序的生命周期在完成我们的工作，那么我们作为开发者来说，正确的掌握生命周期内的每个方法就显得尤为重要了，这不仅仅是为了代码看起来更加的优雅，也是为了正确的完成系统交给我们的任务。</div><div class="line">一个类的生命周期，一定从 init... 开始，但实际开发中，ViewController 的入口几乎 99% 以上是 viewDidLoad ，这时，初始化已经完成，UIViewController 的属性 view 也已经被赋值，如果你重写了 loadView ，最后也会调用 viewDidLoad ，因此，这是个初始化子视图的好地方，这是因为：</div><div class="line">1.	viewDidLoad 只会被调用一次</div><div class="line">2.	如果使用 Autolayout ，这时 子视图的 frame 属性还没有被设置，没有被设置，没有被设置 ，这几乎是你唯一设置绑定的时机（用编码方式设置自动布局），另一个时机是Storyboard中的手动绑定，这当然在viewDidLoad被调用之前。</div><div class="line">最近刚好在 ViewController 的生命周期上面遇到了一些困扰，所以干脆研究下 ViewController 的生命周期</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="ViewController_的初始化">ViewController 的初始化</h2><p>平常我们接触的 ViewController 初始化无非两种方式，一种是通过 Storyboard（Xib类似）初始化，而另外一种就是我们直接通过代码的方式初始化。当然，这两种方式初始化过程是有细微差别的，下面将分别介绍这两种方式的不同初始化过程</p>
 <h3 id="Storyboard_方式的初始化">Storyboard 方式的初始化</h3><p>Storyboard 在初始化阶段是由 <code>init(coder:)</code> -&gt; <code>awakeFromNib()</code> 进行的。</p>
 <h4 id="init(coder:)">init(coder:)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 当使用 Storyboard 时，控制器的构造器为 init(coder:)</div><div class="line">2. 该构造器为必需构造器，如果重写其他构造器，则必须重写该构造器</div><div class="line">3. 该构造器为可失败构造器，即有可能构造失败，返回 nil</div><div class="line">4. 该方法来源自 NSCoding 协议，而 UIViewController 遵从这一协议</div><div class="line">5. 该方法被调用意味着控制器有可能（并非一定）在未来会显示</div><div class="line">6. 在控制器生命周期中，该方法只会被调用一次</div></pre></td></tr></table></figure>
@@ -326,43 +326,43 @@
 		
 			<li><a href="/tags/IOS/" title="IOS">IOS<sup>9</sup></a></li>
 		
-			<li><a href="/tags/框架/" title="框架">框架<sup>4</sup></a></li>
-		
 			<li><a href="/tags/spring/" title="spring">spring<sup>4</sup></a></li>
+		
+			<li><a href="/tags/框架/" title="框架">框架<sup>4</sup></a></li>
 		
 			<li><a href="/tags/软件配置/" title="软件配置">软件配置<sup>3</sup></a></li>
 		
 			<li><a href="/tags/springMVC/" title="springMVC">springMVC<sup>3</sup></a></li>
 		
-			<li><a href="/tags/subversion/" title="subversion">subversion<sup>2</sup></a></li>
-		
 			<li><a href="/tags/spring配置/" title="spring配置">spring配置<sup>2</sup></a></li>
+		
+			<li><a href="/tags/bitnami/" title="bitnami">bitnami<sup>2</sup></a></li>
 		
 			<li><a href="/tags/登陆/" title="登陆">登陆<sup>2</sup></a></li>
 		
-			<li><a href="/tags/bitnami/" title="bitnami">bitnami<sup>2</sup></a></li>
+			<li><a href="/tags/subversion/" title="subversion">subversion<sup>2</sup></a></li>
 		
 			<li><a href="/tags/redmine/" title="redmine">redmine<sup>2</sup></a></li>
 		
 			<li><a href="/tags/工具/" title="工具">工具<sup>2</sup></a></li>
 		
+			<li><a href="/tags/springIOC/" title="springIOC">springIOC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/斜切风格/" title="斜切风格">斜切风格<sup>1</sup></a></li>
+		
 			<li><a href="/tags/tortoisesvn/" title="tortoisesvn">tortoisesvn<sup>1</sup></a></li>
 		
-			<li><a href="/tags/springAOP/" title="springAOP">springAOP<sup>1</sup></a></li>
-		
-			<li><a href="/tags/svn/" title="svn">svn<sup>1</sup></a></li>
-		
-			<li><a href="/tags/iOS持续集成环境搭建/" title="iOS持续集成环境搭建">iOS持续集成环境搭建<sup>1</sup></a></li>
-		
-			<li><a href="/tags/ehcache/" title="ehcache">ehcache<sup>1</sup></a></li>
-		
-			<li><a href="/tags/缓存/" title="缓存">缓存<sup>1</sup></a></li>
+			<li><a href="/tags/转屏/" title="转屏">转屏<sup>1</sup></a></li>
 		
 			<li><a href="/tags/ViewController方法调用次序/" title="ViewController方法调用次序">ViewController方法调用次序<sup>1</sup></a></li>
 		
-			<li><a href="/tags/xhay/" title="xhay">xhay<sup>1</sup></a></li>
+			<li><a href="/tags/UITableViewCell/" title="UITableViewCell">UITableViewCell<sup>1</sup></a></li>
 		
-			<li><a href="/tags/springIOC/" title="springIOC">springIOC<sup>1</sup></a></li>
+			<li><a href="/tags/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/tags/NSOperationQueue/" title="NSOperationQueue">NSOperationQueue<sup>1</sup></a></li>
 		
 		</ul>
 </div>

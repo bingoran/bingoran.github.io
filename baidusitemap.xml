@@ -5,7 +5,7 @@
     
   <url>
     <loc>https://bingoran.github.io/2017/05/25/2017-5-25-ViewController-Life-Cycle/</loc>
-    <lastmod>2017-05-26T07:22:30.000Z</lastmod>
+    <lastmod>2018-10-11T09:28:15.679Z</lastmod>
     <data>
         <display>
         <title></title>
@@ -277,90 +277,18 @@
     
     
   <url>
-    <loc>https://bingoran.github.io/2015/04/09/2015-04-09-Spring3test/</loc>
+    <loc>https://bingoran.github.io/2015/04/24/2015-04-24-SpringMVCDemo1/</loc>
     <lastmod>2015-07-21T16:23:28.000Z</lastmod>
     <data>
         <display>
-        <title>Spring的简单配置</title>
-        <pubTime>2015-04-09T11:48:06.000Z</pubTime>
+        <title>搭建SpringMVC框架,实现简单登陆功能</title>
+        <pubTime>2015-04-24T01:56:08.000Z</pubTime>
         
         <tag>spring</tag>
          
         <tag>框架</tag>
          
-        <tag>spring配置</tag>
-         
-        <tag>springIOC</tag>
-         
-         
-           
-             
-              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://bingoran.github.io/2015/04/09/2015-04-09-Spring3AOP/</loc>
-    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
-    <data>
-        <display>
-        <title>Spring AOP的应用</title>
-        <pubTime>2015-04-09T12:35:24.000Z</pubTime>
-        
-        <tag>spring</tag>
-         
-        <tag>springAOP</tag>
-         
-        <tag>框架</tag>
-         
-        <tag>spring配置</tag>
-         
-         
-           
-             
-              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://bingoran.github.io/2015/05/21/2015-05-21-MyBatiesDemo1/</loc>
-    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
-    <data>
-        <display>
-        <title>搭建简单的MyBaties框架</title>
-        <pubTime>2015-05-21T08:05:12.000Z</pubTime>
-        
-        <tag>MyBaties</tag>
-         
-         
-           
-             
-              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://bingoran.github.io/2015/05/07/2015-05-07-SpringMVCDemo2/</loc>
-    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
-    <data>
-        <display>
-        <title>注解方式实现登录，文件上传</title>
-        <pubTime>2015-05-07T13:58:18.000Z</pubTime>
-        
         <tag>springMVC</tag>
-         
-        <tag>spring</tag>
-         
-        <tag>框架</tag>
          
         <tag>登陆</tag>
          
@@ -401,6 +329,58 @@
 
     
   <url>
+    <loc>https://bingoran.github.io/2015/04/09/2015-04-09-Spring3test/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring的简单配置</title>
+        <pubTime>2015-04-09T11:48:06.000Z</pubTime>
+        
+        <tag>spring</tag>
+         
+        <tag>springIOC</tag>
+         
+        <tag>框架</tag>
+         
+        <tag>spring配置</tag>
+         
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/04/09/2015-04-09-Spring3AOP/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>Spring AOP的应用</title>
+        <pubTime>2015-04-09T12:35:24.000Z</pubTime>
+        
+        <tag>spring</tag>
+         
+        <tag>框架</tag>
+         
+        <tag>spring配置</tag>
+         
+        <tag>springAOP</tag>
+         
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://bingoran.github.io/2014/12/27/2014-12-27-Subversion/</loc>
     <lastmod>2015-07-21T16:23:28.000Z</lastmod>
     <data>
@@ -431,18 +411,38 @@
 
     
   <url>
-    <loc>https://bingoran.github.io/2015/04/24/2015-04-24-SpringMVCDemo1/</loc>
+    <loc>https://bingoran.github.io/2015/05/21/2015-05-21-MyBatiesDemo1/</loc>
     <lastmod>2015-07-21T16:23:28.000Z</lastmod>
     <data>
         <display>
-        <title>搭建SpringMVC框架,实现简单登陆功能</title>
-        <pubTime>2015-04-24T01:56:08.000Z</pubTime>
+        <title>搭建简单的MyBaties框架</title>
+        <pubTime>2015-05-21T08:05:12.000Z</pubTime>
         
-        <tag>springMVC</tag>
+        <tag>MyBaties</tag>
          
+         
+           
+             
+              <breadCrumb title="Framework" url="https://bingoran.github.io/categories/Framework/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://bingoran.github.io/2015/05/07/2015-05-07-SpringMVCDemo2/</loc>
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    <data>
+        <display>
+        <title>注解方式实现登录，文件上传</title>
+        <pubTime>2015-05-07T13:58:18.000Z</pubTime>
+        
         <tag>spring</tag>
          
         <tag>框架</tag>
+         
+        <tag>springMVC</tag>
          
         <tag>登陆</tag>
          
@@ -455,6 +455,8 @@
     </data>
     </url>
 
+    
+    
     
     
   <url>
@@ -486,6 +488,4 @@
     </data>
     </url>
 
-    
-    
 </urlset>

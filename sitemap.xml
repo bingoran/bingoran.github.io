@@ -4,7 +4,7 @@
   <url>
     <loc>https://bingoran.github.io/2017/05/25/2017-5-25-ViewController-Life-Cycle/</loc>
     
-    <lastmod>2017-05-26T07:22:30.000Z</lastmod>
+    <lastmod>2018-10-11T09:28:15.679Z</lastmod>
     
   </url>
   
@@ -114,6 +114,20 @@
   </url>
   
   <url>
+    <loc>https://bingoran.github.io/2015/04/24/2015-04-24-SpringMVCDemo1/</loc>
+    
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://bingoran.github.io/2014/12/18/2014-12-18-redmine-Subversion/</loc>
+    
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://bingoran.github.io/2015/04/09/2015-04-09-Spring3test/</loc>
     
     <lastmod>2015-07-21T16:23:28.000Z</lastmod>
@@ -122,6 +136,13 @@
   
   <url>
     <loc>https://bingoran.github.io/2015/04/09/2015-04-09-Spring3AOP/</loc>
+    
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://bingoran.github.io/2014/12/27/2014-12-27-Subversion/</loc>
     
     <lastmod>2015-07-21T16:23:28.000Z</lastmod>
     
@@ -142,21 +163,7 @@
   </url>
   
   <url>
-    <loc>https://bingoran.github.io/2014/12/18/2014-12-18-redmine-Subversion/</loc>
-    
-    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://bingoran.github.io/2014/12/27/2014-12-27-Subversion/</loc>
-    
-    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://bingoran.github.io/2015/04/24/2015-04-24-SpringMVCDemo1/</loc>
+    <loc>https://bingoran.github.io/search/index.html</loc>
     
     <lastmod>2015-07-21T16:23:28.000Z</lastmod>
     
@@ -170,21 +177,14 @@
   </url>
   
   <url>
-    <loc>https://bingoran.github.io/2015/01/07/2015-01-07-springmec-ehcache/</loc>
-    
-    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://bingoran.github.io/search/index.html</loc>
-    
-    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://bingoran.github.io/tags/index.html</loc>
+    
+    <lastmod>2015-07-21T16:23:28.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://bingoran.github.io/2015/01/07/2015-01-07-springmec-ehcache/</loc>
     
     <lastmod>2015-07-21T16:23:28.000Z</lastmod>
     

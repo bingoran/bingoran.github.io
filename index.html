@@ -136,106 +136,11 @@
     <div class="article-content">
         
         <h1 id="ViewController_的生命周期">ViewController 的生命周期</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">相信对于一个软件开发者来说，生命周期一定不是一个陌生的词语，我们软件开发所做的事情都是按照程序的生命周期进行的，在这个生命周期里边，我们和操作系统打着交道。在大部分的时间里，我们实际上并没有程序“控制权”，而是在配合系统或者一个类“正确”的完成他们的生命周期。以 ViewController 为例子，在 ViewController 中有一系列的生命周期方法，例如 loadView：、viewDidLoad：、viewWillAppear：、viewDidAppear、viewWillDisappear、viewDidDisappear 等等方法，这些方法似乎就像一个情报员，时刻告诉我们 ViewController 现在完成了什么、正在干什么、将要干什么。而我们只需要在正确的时间做正确的事情就行了，我们可以在某些方法里添加一些我们希望看到的视图、效果，而通过这些大量的定制组合就组成了我们的APP应用。</div><div class="line">既然我们都是按照程序的生命周期在完成我们的工作，那么我们作为开发者来说，正确的掌握生命周期内的每个方法就显得尤为重要了，这不仅仅是为了代码看起来更加的优雅，也是为了正确的完成系统交给我们的任务。</div><div class="line">一个类的生命周期，一定从 init... 开始，但实际开发中，ViewController 的入口几乎 99% 以上是 viewDidLoad ，这时，初始化已经完成，UIViewController 的属性 view 也已经被赋值，如果你重写了 loadView ，最后也会调用 viewDidLoad ，因此，这是个初始化子视图的好地方，这是因为：</div><div class="line">1.	viewDidLoad 只会被调用一次</div><div class="line">2.	如果使用 Autolayout ，这时 子视图的 frame 属性还没有被设置，没有被设置，没有被设置 ，这几乎是你唯一设置绑定的时机（用编码方式设置自动布局），另一个时机是Storyboard中的手动绑定，这当然在viewDidLoad被调用之前。</div><div class="line">最近刚好在 ViewController 的生命周期上面遇到了一些困扰，所以干脆研究下 ViewController 的生命周期</div></pre></td></tr></table></figure>
-<h2 id="ViewController_的初始化">ViewController 的初始化</h2><p>平常我们接触的 ViewController 初始化无非两种方式，一种是通过 Storyboard（Xib类似）初始化，而另外一种就是我们直接通过代码的方式初始化。当然，这两种方式初始化过程是有细微差别的，下面将分别介绍这两种方式的不同初始化过程</p>
-<h3 id="Storyboard_方式的初始化">Storyboard 方式的初始化</h3><p>Storyboard 在初始化阶段是由 <code>init(coder:)</code> -&gt; <code>awakeFromNib()</code> 进行的。</p>
-<h4 id="init(coder:)">init(coder:)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 当使用 Storyboard 时，控制器的构造器为 init(coder:)</div><div class="line">2. 该构造器为必需构造器，如果重写其他构造器，则必须重写该构造器</div><div class="line">3. 该构造器为可失败构造器，即有可能构造失败，返回 nil</div><div class="line">4. 该方法来源自 NSCoding 协议，而 UIViewController 遵从这一协议</div><div class="line">5. 该方法被调用意味着控制器有可能（并非一定）在未来会显示</div><div class="line">6. 在控制器生命周期中，该方法只会被调用一次</div></pre></td></tr></table></figure>
-<h4 id="awakeFromNib()">awakeFromNib()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1.当使用 Storyboard 时，该方法会被调用</div><div class="line">2.当调用该方法时，将保证所有的 outlet 和 action 连接已经完成</div><div class="line">3.该方法内部必须调用父类该方法，虽然默认实现为空，但 UIKit 中许多类的该方法为非空</div><div class="line">4.由于控制器中对象的初始化顺序不能确定，所以构造器中不应该向其他对象发送消息，而应当在 awakeFromNib() 中安全地发送</div><div class="line">5.通常使用 awakeFromNib() 可以进行在设计时无法完成的必要额外设置</div></pre></td></tr></table></figure>
-<p>另外，由于是 Archive 并实例化对象，所以 View Controller 在初始化时调用的是 init(coder:)。手动调用 init 则不会从 nib 文件里加载,这个方法在执行 loadNibNamed: 一类的方法时就会被调用</p>
-<h3 id="Code_方式的初始化">Code 方式的初始化</h3><p>不同 Storyboard 的是，Code 在初始化阶段是调用 <code>init(nibName:bundle:)</code> 这个方法</p>
-<h4 id="init(nibName:bundle:)">init(nibName:bundle:)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.当使用纯代码创建控制器，控制器的构造器为 init(nibName:bundle:)</div><div class="line">2.虽然使用代码创建时调用了该构造器，但传入的参数均为 nil</div></pre></td></tr></table></figure>
-<h3 id="loadView()">loadView()</h3><p>View Controller 创建后需要加载 self.view 时会调用这个方法。此方法不应该被直接调用,如果我们的界面是在 Storyboard 中创建的，那我们也不应该覆盖这个方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1.loadView() 即加载控制器管理的 view</div><div class="line">2.不能直接手动调用该方法；当 view 被请求却为 nil 时，该方法加载并创建 view</div><div class="line">3.若控制器有关联的 Nib 文件，该方法会从 Nib 文件中加载 view；如果没有，则创建空白 UIView 对象</div><div class="line">4.如果使用 Interface Builder 创建 view，则务必不要重写该方法</div><div class="line">5.可以使用该方法手动创建视图，且需要将根视图分配为 view；自定义实现不应该再调用父类的该方法</div><div class="line">6.执行其他初始化操作，建议放在 viewDidLoad() 中</div></pre></td></tr></table></figure></p>
-<p>当 View Controller 有以下情况时都会在此方法中从 nib 文件加载 View ：</p>
-<ul>
-<li>View Controller 是从 storyboard 中实例化的</li>
-<li>通过 initWithNibName:bundle: 初始化</li>
-<li>在 App Bundle 中有一个 nib 文件名称和本类名相同</li>
-</ul>
-<p>当我们调用 self.view 时，如果 self.view 非 nil，那么会直接调用该对象。如果为 nil，那么会调用 self.loadView() 创建一个 UIView 并将这个对象赋值给 self.view<br>在这个函数里调用 self.view 属性会造成死循环。因为访问 self.view 时发现该属性为空，会去调用 loadView() 方法，此时会造成死循环</p>
-<h3 id="viewDidLoad()">viewDidLoad()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1.view 被加载到内存后调用 viewDidLoad()</div><div class="line">2.重写该方法需要首先调用父类该方法</div><div class="line">3.该方法中可以额外初始化控件，例如添加子控件，添加约束</div><div class="line">4.该方法被调用意味着控制器有可能（并非一定）在未来会显示</div><div class="line">5.在控制器生命周期中，该方法只会被调用一次</div></pre></td></tr></table></figure>
-<p>注意：此时 view 还没有被加入 view hierarchy 中，只是被加载入了内存中。在这里如果执行 self.presentViewController 之类的操作会出错</p>
-<h3 id="viewWillAppear(_:)">viewWillAppear(_:)</h3><p>当 View 将要被添加到 View Hierarchy 中时会调用这个方法，每一次 View 将要显示时都会调用。在这个方法被调用时，也是在显示 View 所需要的动画被配置前<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1.该方法在控制器 view 即将添加到视图层次时以及展示 view 时所有动画配置前被调用</div><div class="line">2.重写该方法需要首先调用父类该方法</div><div class="line">3.该方法中可以进行操作即将显示的 view，例如改变状态栏的取向，类型</div><div class="line">4.该方法被调用意味着控制器将一定会显示</div><div class="line">5.在控制器生命周期中，该方法可能会被多次调用</div></pre></td></tr></table></figure></p>
-<p>注意：这个时候在做一些和 frame 相关的操作时仍会出错，在这里 View 将要被加入 View Hierarchy，但是仍旧没有被添加进去</p>
-<h3 id="updateViewConstraints">updateViewConstraints</h3><p>   updateViewConstraints 是 AutoLayout出现后新增的 api ，苹果官方的解释是该方法是用来添加约束的，重新该方法需要在方法实现的最后调用父类的该方法。并且这两个方法不建议直接调用<br>   这里要注意，如果一个 view 或 controller 是由 interface builder 初始化的，那么这个实例的 updateViewConstraints 或 updateConstraints 方法便会被系统自动调用，起原因应该就是对应的 requiresConstraintBasedLayout 方法返回 true。而纯代码初始化的视图 requiresConstraintBasedLayout 方法默认返回 false。<br>所以在纯代码自定义一个 view 时，想把约束写在 updateConstraints 方法中，就一定要重写requiresConstraintBasedLayout 方法，返回true。</p>
-<h3 id="viewWillLayoutSubviews()">viewWillLayoutSubviews()</h3><p>在 ViewController.view 将要布局 Subviews 时调用。当每一次界面的布局发生变化时都会被调用，例如旋转、被标记为需要 layout，在这之后 AutoLayout 会改变布局，在此方法中view的bound和orientation才最终确定，如果没有使用autoresizing mask或autolayout约束，可以在这个方法里布局subview，但是要注意，此方法只要根view的frame发生变化，或者标记为need layout，就会调用此方法，所以可能调多次，不适合做复杂的操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1.该方法在通知控制器将要布局 view 的子控件时调用</div><div class="line">2.每当视图的 bounds 改变，view 将调整其子控件位置</div><div class="line">3.该方法可重写以在 view 布局子控件前做出改变</div><div class="line">4.该方法的默认实现为空</div><div class="line">5.该方法调用时，AutoLayout 未起作用</div><div class="line">6.在控制器生命周期中，该方法可能会被多次调用</div></pre></td></tr></table></figure></p>
-<p>注意点:init初始化不会触发layoutSubviews<br>  addSubview会触发layoutSubviews<br>  设置view的Frame会触发layoutSubviews，当然前提 是frame的值设置前后发生了变化<br>  滚动一个UIScrollView会触发layoutSubviews<br>  旋转Screen会触发父UIView上的layoutSubviews事件<br>  改变一个UIView大小的时候也会触发父UIView上的layoutSubviews事件</p>
-<h3 id="viewDidLayoutSubviews()">viewDidLayoutSubviews()</h3><p>已经布局完成，也可以做一些操作，已通过 AutoLayout 布局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1.该方法在通知控制器已经布局 view 的子控件时调用</div><div class="line">2.该方法可重写以在 view 布局子控件后做出改变</div><div class="line">3.该方法的默认实现为空</div><div class="line">4.该方法调用时，AutoLayout 已经完成</div><div class="line">5.在控制器生命周期中，该方法可能会被多次调用</div></pre></td></tr></table></figure></p>
-<h3 id="viewDidAppear(_:)">viewDidAppear(_:)</h3><p>此时界面已经被显示出来了，做一些操作时可能会让界面变化可见<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1.该方法在控制器 view 已经添加到视图层次时被调用</div><div class="line">2.重写该方法需要首先调用父类该方法</div><div class="line">3.该方法可重写以进行有关正在展示的视图操作</div><div class="line">4.在控制器生命周期中，该方法可能会被多次调用</div></pre></td></tr></table></figure></p>
-<h4 id="一个例子">一个例子</h4><p>通过 AutoLayout 在界面中添加一个 UITextView，在各个阶段输出它的 Frame 结果如下</p>
-<ul>
-<li><p>viewDidLoad</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">frame = (20 40; 560 160);  </div><div class="line">contentSize: &#123;560, 133&#125;;  </div><div class="line">contentOffset: &#123;0, 0&#125;;</div></pre></td></tr></table></figure>
-</li>
-<li><p>viewWillAppear</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">frame = (20 40; 560 160);  </div><div class="line">contentOffset: &#123;0, 0&#125;;  </div><div class="line">contentSize: &#123;560, 133&#125;;</div></pre></td></tr></table></figure>
-</li>
-<li><p>viewWillLayoutSubviews</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">frame = (20 40; 560 160);  </div><div class="line">contentOffset: &#123;0, 0&#125;;  </div><div class="line">contentSize: &#123;560, 133&#125;;</div></pre></td></tr></table></figure>
-</li>
-<li><p>viewDidLayoutSubviews</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">frame = (20 40; 374 296);  </div><div class="line">contentOffset: &#123;0, -15&#125;;  </div><div class="line">contentSize: &#123;374, 184&#125;</div></pre></td></tr></table></figure>
-</li>
-<li><p>viewDidAppear</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">frame = (20 40; 374 296);  </div><div class="line">contentOffset: &#123;0, -15&#125;;  </div><div class="line">contentSize: &#123;374, 184&#125;;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>可以看到，从 viewDidLayoutSubview 开始， UITextView 的 Frame 发生了一次变化， contentSize 与 contentOffset 都发生了变化；因为在 viewWillAppear 及之前， view 还没有被加入层级中，布局还不是最终布局；所以在 viewWillAppear 及以前，计算 UITextView 行高等操作可能会出现问题；当呼出键盘后，viewWillLayoutSubview viewDidLayoutSubviews 将会被调用。可以看出，每一次布局发生变化时候这两个方法都会被调用</p>
-<h3 id="viewWillDisappear(_:)">viewWillDisappear(_:)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.该方法在控制器 view 将要从视图层次移除时被调用</div><div class="line">2.类似 viewWillAppear(_:)</div><div class="line">3.该方法可重写以提交变更，取消视图第一响应者状态</div></pre></td></tr></table></figure>
-<h3 id="viewDidDisappear(_:)">viewDidDisappear(_:)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.该方法在控制器 view 已经从视图层次移除时被调用</div><div class="line">2.类似 viewDidAppear(_:)</div><div class="line">3.该方法可重写以清除或隐藏控件</div></pre></td></tr></table></figure>
-<h3 id="didReceiveMemoryWarning()">didReceiveMemoryWarning()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1.当内存预警时，该方法被调用</div><div class="line">2.不能直接手动调用该方法</div><div class="line">3.该方法可重写以释放资源、内存</div></pre></td></tr></table></figure>
-<h3 id="deinit()">deinit()</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1.控制器销毁时（离开堆），调用该方法</div></pre></td></tr></table></figure>
-<h3 id="几个例子">几个例子</h3><h4 id="屏幕旋转">屏幕旋转</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">willTransition(to:with:)</div><div class="line">输出:</div><div class="line">viewWillLayoutSubviews() - Optional((67.5, 269.5, 240.0, 128.0))</div><div class="line">viewDidLayoutSubviews() - Optional((213.5, 123.5, 240.0, 128.0))</div><div class="line">viewWillLayoutSubviews() - Optional((213.5, 123.5, 240.0, 128.0))</div><div class="line">viewDidLayoutSubviews() - Optional((213.5, 123.5, 240.0, 128.0))</div><div class="line">viewWillLayoutSubviews() - Optional((213.5, 123.5, 240.0, 128.0))</div><div class="line">viewDidLayoutSubviews() - Optional((213.5, 123.5, 240.0, 128.0))</div></pre></td></tr></table></figure>
-<ul>
-<li>当 view 转变，会调用 <code>willTransition(to:with:)</code> 方法</li>
-<li>当屏幕旋转，view 的 bounds 改变，其内部的子控件也需要按照约束调整为新的位置，因此也调用了 <code>viewWillLayoutSubviews()</code> 和 <code>viewDidLayoutSubviews()</code> </li>
-</ul>
-<h4 id="Present_&amp;_Dismiss">Present &amp; Dismiss</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">输出:</div><div class="line">viewWillDisappear</div><div class="line">viewDidDisappear</div><div class="line">viewDidDisappear</div><div class="line">viewWillAppear</div><div class="line">viewDidAppear</div></pre></td></tr></table></figure>
-<ul>
-<li>当在一个控制器内 Present 新的控制器，原先的控制器并不会销毁，但会消失，因此调用了 <code>viewWillDisappear</code> 和 <code>viewDidDisappear</code> 方法</li>
-<li>如果新的控制器 Dismiss，即清除自己，原先的控制器会再一次出现，因此调用了其中的 <code>viewWillAppear</code> 和 <code>viewDidAppear</code> 方法</li>
-</ul>
-<h4 id="死循环">死循环</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">class LoopViewController: UIViewController &#123;</div><div class="line"></div><div class="line">    override func loadView() &#123;</div><div class="line">        print(#function)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    override func viewDidLoad() &#123;</div><div class="line">        print(#function)</div><div class="line">        let _ = view</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">输出:</div><div class="line">loadView()</div><div class="line">viewDidLoad()</div><div class="line">loadView()</div><div class="line">viewDidLoad()</div><div class="line">loadView()</div><div class="line">viewDidLoad()</div><div class="line">loadView()</div><div class="line">viewDidLoad()</div><div class="line">loadView()</div></pre></td></tr></table></figure>
-<ul>
-<li>若 <code>loadView()</code> 没有加载 view，<code>viewDidLoad()</code> 会一直调用 <code>loadView()</code> 加载 view，因此构成了死循环，程序即卡死</li>
-</ul>
-<h4 id="push到下一个页面时">push到下一个页面时</h4><p>配合Storyboard方式的方法列表调用顺序<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">1.	init(coder:)</div><div class="line">2.	awakeFromNib</div><div class="line">3.	willMoveToParentViewController:</div><div class="line">4.	prefersStatusBarHidden</div><div class="line">5.	preferredStatusBarUpdateAnimation</div><div class="line">6.	loadView</div><div class="line">7.	prepareForSegue:sender:</div><div class="line">8.	viewDidLoad</div><div class="line">9.	extendedLayoutIncludesOpaqueBars</div><div class="line">10.edgesForExtendedLayout</div><div class="line">11.viewWillAppear:</div><div class="line">12.extendedLayoutIncludesOpaqueBars</div><div class="line">13.edgesForExtendedLayout</div><div class="line">14.updateViewConstraints</div><div class="line">15.viewWillLayoutSubviews</div><div class="line">16.viewDidLayoutSubviews</div><div class="line">17.（Animation）</div><div class="line">18.viewDidAppear:</div><div class="line">19.didMoveToParentViewController:</div><div class="line">20.updateViewConstraints</div><div class="line">21.viewWillLayoutSubviews</div><div class="line">22.viewDidLayoutSubviews</div></pre></td></tr></table></figure></p>
-<h1 id="UIView_的生命周期">UIView 的生命周期</h1><ul>
-<li>通常，UIView 应尽可能避免重写构造器。</li>
-<li>init(frame:)：纯代码（指定构造器）；init(coder:)：Storyboard（必需可失败构造器）。若需要构造器，需要同时重写这两个构造器：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">func setup() &#123;</div><div class="line">    // 如果本类有自定义变量，则此处不可初始化他们，</div><div class="line">    // 因为只有当初始化后才能调用自己的方法。</div><div class="line">&#125;</div><div class="line"></div><div class="line">override init(frame: CGRect) &#123;</div><div class="line">    super.init(frame: frame)</div><div class="line">    // 初始化变量</div><div class="line">    setup()</div><div class="line">&#125;</div><div class="line"></div><div class="line">required init?(coder aDecoder: NSCoder) &#123;</div><div class="line">    super.init(coder: aDecoder)</div><div class="line">    // 初始化变量</div><div class="line">    setup()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<ul>
-<li>awakeFromNib() 只在使用 Storyboard 的 UIView 中被调用。</li>
-<li>awakeFromNib() 并不是构造器，但它在初始化完成后立即被调用。</li>
-<li>所有 Storyboard 中继承自 NSObject 的对象发送该消息。但顺序是不确定的，因此不能在这里调用其他任何 Storyboard 中的对象</li>
-</ul>
-<h2 id="Xib_&amp;_Nib">Xib &amp; Nib</h2><ul>
-<li>ib 是 Interface Builder 的缩写，即界面构造器。这里简要说下，Xib 和 Nib 各是什么，有什么区别</li>
-<li>Xib 实际是一个 XML 文件，而 Nib 是二进制文件。当应用编译时，Xib 文件被翻译为 Nib。所以在 Xcode 中，我们可以自己新建 Xib 文件来构造 UI，而当编译时，Xcode 会自动生成相应的 Nib 文件，而不需我们额外关注。关于其详细介绍，您可以参考文末的资料<br> 我们现在新建一个继承UIView的MyView类，并勾选Xib，并将 Utilities 中 Identity inspector 的 Custom Class 改为 MyView<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line">class MyView: UIView &#123;</div><div class="line"></div><div class="line">    override init(frame: CGRect) &#123;</div><div class="line">        super.init(frame: frame)</div><div class="line"></div><div class="line">        print(&quot;init(frame:)&quot;)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    required init?(coder aDecoder: NSCoder) &#123;</div><div class="line">        super.init(coder: aDecoder)</div><div class="line"></div><div class="line">        print(&quot;init(coder:)&quot;)</div><div class="line">        // fatalError(&quot;init(coder:) has not been implemented&quot;)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    override func awakeFromNib() &#123;</div><div class="line">        super.awakeFromNib()</div><div class="line"></div><div class="line">        print(&quot;awakeFromNib()&quot;)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>之后运行即可在屏幕上看到该自定义 UIView，控制台输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">输出</div><div class="line">init(coder:)</div><div class="line">awakeFromNib()</div></pre></td></tr></table></figure></p>
-<p>通过打印的输出，可以看出使用 Interface Builder 载入 View 不会调用 <code>init(frame:)</code> 方法，而是调用了 <code>init(coder:)</code>。<code>init(coder:)</code> 是 NSCoding 协议中的方法，NSCoding 是负责编码解码，归档处理的协议<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">required init?(coder aDecoder: NSCoder)</div></pre></td></tr></table></figure></p>
-<p>init(coder:) 的调用处于 Nib 载入时，而 awakeFromNib() 的调用处于 Nib 载入后。Nib 的载入过程如下：</p>
-<ul>
-<li>Nib 文件内容和引用的资源文件加载到内存；</li>
-<li>反归档存储于 Nib 文件的图像数据对象并初始化；</li>
-<li>遵从 NSCoding 的对象（UIView &amp; UIViewController）调用 init(coder:)</li>
-<li>其他对象调用其他构造器方法</li>
-<li>建立对象间连接：Outlet &amp; Action</li>
-<li>实现 awakeFromNib() 的对象调用该方法</li>
-</ul>
-<p>需要注意的是，awakeFromNib() 中需要调用父类的该方法以保证父类的进行额外初始化。而在本例中重写的 init(coder:) 目的主要是查看调用顺序，并没有加入特别的操作。因此在实际使用中，如果使用 Interface Builder，可以不重写该方法</p>
-<h2 id="Code">Code</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import UIKit</div><div class="line">class MyView: UIView &#123;</div><div class="line"></div><div class="line">    override init(frame: CGRect) &#123;</div><div class="line">        super.init(frame: frame)</div><div class="line"></div><div class="line">        print(&quot;init(frame:)&quot;)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    required init?(coder aDecoder: NSCoder) &#123;</div><div class="line">        fatalError(&quot;init(coder:) has not been implemented&quot;)</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    override func awakeFromNib() &#123;</div><div class="line">        super.awakeFromNib()</div><div class="line"></div><div class="line">        print(&quot;awakeFromNib&quot;)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>之后在其他UIView或者UIController调用该类的时候<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">输出</div><div class="line">init(frame:)</div></pre></td></tr></table></figure></p>
-<p>通过纯代码创建自定义 UIView，便只调用 <code>init(frame:)</code> 方法，不涉及 Nib 的方法，因此不会调用 <code>awakeFromNib()</code> 和 <code>init(coder:)</code> 方法。而由于 <code>init(coder:)</code> 为必要构造器，因此重写 <code>init(frame:)</code> 时，必须实现该方法</p>
-<p>有时，为了便于从 Interface Builder 和纯代码都能创建自定义 UIView 对象，可以将 <code>init(coder:)</code> 方法改为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">required init?(coder aDecoder: NSCoder) &#123;</div><div class="line">    super.init(coder: aDecoder)</div><div class="line">    // fatalError(&quot;init(coder:) has not been implemented&quot;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>若保留 <code>fatalError()</code>，则从 Nib 初始化时会无条件输出语句并停止运行</p>
-<h2 id="参考链接">参考链接</h2><p> <a href="https://juejin.im/entry/57988af4d342d300590d5445" target="_blank" rel="external">https://juejin.im/entry/57988af4d342d300590d5445</a><br> <a href="https://juejin.im/post/58c20a761b69e6006bc965ee" target="_blank" rel="external">https://juejin.im/post/58c20a761b69e6006bc965ee</a><br> <a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/LoadingResources/CocoaNibs/CocoaNibs.html" target="_blank" rel="external">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/LoadingResources/CocoaNibs/CocoaNibs.html</a><br> <a href="https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-ID203" target="_blank" rel="external">https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Initialization.html#//apple_ref/doc/uid/TP40014097-CH18-ID203</a><br> <a href="https://github.com/kingcos/CS193P_2017" target="_blank" rel="external">https://github.com/kingcos/CS193P_2017</a><br> <a href="http://amztion.com/2016/12/03/uiviewcontroller-lifecycle/" target="_blank" rel="external">http://amztion.com/2016/12/03/uiviewcontroller-lifecycle/</a><br> <a href="http://www.infoq.com/cn/articles/ios-app-arch-2-1" target="_blank" rel="external">http://www.infoq.com/cn/articles/ios-app-arch-2-1</a></p>
-
         
         
         <p class="article-more-link">
+          
+            <a href="/2017/05/25/2017-5-25-ViewController-Life-Cycle/#more">Read More</a>
           
        </p>
     </div>
@@ -895,43 +800,43 @@
 		
 			<li><a href="/tags/IOS/" title="IOS">IOS<sup>9</sup></a></li>
 		
-			<li><a href="/tags/框架/" title="框架">框架<sup>4</sup></a></li>
-		
 			<li><a href="/tags/spring/" title="spring">spring<sup>4</sup></a></li>
+		
+			<li><a href="/tags/框架/" title="框架">框架<sup>4</sup></a></li>
 		
 			<li><a href="/tags/软件配置/" title="软件配置">软件配置<sup>3</sup></a></li>
 		
 			<li><a href="/tags/springMVC/" title="springMVC">springMVC<sup>3</sup></a></li>
 		
-			<li><a href="/tags/subversion/" title="subversion">subversion<sup>2</sup></a></li>
-		
 			<li><a href="/tags/spring配置/" title="spring配置">spring配置<sup>2</sup></a></li>
+		
+			<li><a href="/tags/bitnami/" title="bitnami">bitnami<sup>2</sup></a></li>
 		
 			<li><a href="/tags/登陆/" title="登陆">登陆<sup>2</sup></a></li>
 		
-			<li><a href="/tags/bitnami/" title="bitnami">bitnami<sup>2</sup></a></li>
+			<li><a href="/tags/subversion/" title="subversion">subversion<sup>2</sup></a></li>
 		
 			<li><a href="/tags/redmine/" title="redmine">redmine<sup>2</sup></a></li>
 		
 			<li><a href="/tags/工具/" title="工具">工具<sup>2</sup></a></li>
 		
+			<li><a href="/tags/springIOC/" title="springIOC">springIOC<sup>1</sup></a></li>
+		
+			<li><a href="/tags/canvas/" title="canvas">canvas<sup>1</sup></a></li>
+		
+			<li><a href="/tags/斜切风格/" title="斜切风格">斜切风格<sup>1</sup></a></li>
+		
 			<li><a href="/tags/tortoisesvn/" title="tortoisesvn">tortoisesvn<sup>1</sup></a></li>
 		
-			<li><a href="/tags/springAOP/" title="springAOP">springAOP<sup>1</sup></a></li>
-		
-			<li><a href="/tags/svn/" title="svn">svn<sup>1</sup></a></li>
-		
-			<li><a href="/tags/iOS持续集成环境搭建/" title="iOS持续集成环境搭建">iOS持续集成环境搭建<sup>1</sup></a></li>
-		
-			<li><a href="/tags/ehcache/" title="ehcache">ehcache<sup>1</sup></a></li>
-		
-			<li><a href="/tags/缓存/" title="缓存">缓存<sup>1</sup></a></li>
+			<li><a href="/tags/转屏/" title="转屏">转屏<sup>1</sup></a></li>
 		
 			<li><a href="/tags/ViewController方法调用次序/" title="ViewController方法调用次序">ViewController方法调用次序<sup>1</sup></a></li>
 		
-			<li><a href="/tags/xhay/" title="xhay">xhay<sup>1</sup></a></li>
+			<li><a href="/tags/UITableViewCell/" title="UITableViewCell">UITableViewCell<sup>1</sup></a></li>
 		
-			<li><a href="/tags/springIOC/" title="springIOC">springIOC<sup>1</sup></a></li>
+			<li><a href="/tags/svn/" title="svn">svn<sup>1</sup></a></li>
+		
+			<li><a href="/tags/NSOperationQueue/" title="NSOperationQueue">NSOperationQueue<sup>1</sup></a></li>
 		
 		</ul>
 </div>
